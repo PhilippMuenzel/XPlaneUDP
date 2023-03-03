@@ -71,6 +71,11 @@ class XPlaneUdp:
     if (self.datarefidx%100 == 0):
       sleep(0.2)
 
+  def SendFpl(self, fpln):
+    cmd = b"FPLN\x00"
+    message = struct.pack("<5s1400s", cmd, fpln.encode())
+    self.socket.sendto(message, (self.BeaconData["IP"], self.BeaconData["Port"]))
+
   def GetValues(self):
     try:
       # Receive packet
@@ -188,6 +193,26 @@ if __name__ == '__main__':
     
     xp.AddDataRef("sim/flightmodel/position/indicated_airspeed", freq=1)
     xp.AddDataRef("sim/flightmodel/position/latitude")
+
+    fpln = "I\n\
+1100 Version\n\
+CYCLE 2211\n\
+ADEP KCLT\n\
+DEPRWY RW36R\n\
+SID KILNS4\n\
+SIDTRANS KILNS\n\
+ADES KEWR\n\
+DESRWY RW22L\n\
+STAR PHLBO3\n\
+STARTRANS FAK\n\
+APP I22L\n\
+APPTRANS PATRN\n\
+NUMENR 4\n\
+1 KCLT ADEP 748.000000 35.213700 -80.949100\n\
+11 AUDII DRCT 0.000000 36.202142 -78.810072\n\
+3 FAK DRCT 0.000000 37.528508 -77.828219\n\
+1 KEWR ADES 17.000000 40.692500 -74.168700"
+    xp.SendFpl(fpln)
     
     while True:
       try:
