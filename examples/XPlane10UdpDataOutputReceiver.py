@@ -26,14 +26,14 @@ def DecodeDataMessage(message):
     values["pitch"]=dataFLOATS[0]
     values["roll"]=dataFLOATS[1]
     values["heading"]=dataFLOATS[2]
-    values["heading2"]=dataFLOATS[3]
+    values["heading_mag"]=dataFLOATS[4]
   elif type == 20:
     values["latitude"]=dataFLOATS[0]
     values["longitude"]=dataFLOATS[1]
     values["altitude MSL"]=dataFLOATS[2]
     values["altitude AGL"]=dataFLOATS[3]
-    values["altitude 2"]=dataFLOATS[4]
-    values["altitude 3"]=dataFLOATS[5]
+    values["terrain elevation"]=dataFLOATS[4]
+    values["pressure altitude"]=dataFLOATS[5]
   else:
     print("  Type ", type, " not implemented: ",dataFLOATS)
   return values
@@ -73,7 +73,7 @@ def main():
     # Example:
     # {'latitude': 47.72798156738281, 'longitude': 12.434000015258789, 
     #   'altitude MSL': 1822.67, 'altitude AGL': 0.17, 'speed': 4.11, 
-    #   'roll': 1.05, 'pitch': -4.38, 'heading': 275.43, 'heading2': 271.84}
+    #   'roll': 1.05, 'pitch': -4.38, 'heading': 275.43, 'heading_mag': 271.84}
     values = DecodePacket(data)
     print(values)
     print()
