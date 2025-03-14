@@ -44,7 +44,7 @@ def DecodePacket(data):
   headerlen = 5
   header = data[0:headerlen]
   messages = data[headerlen:]
-  if(header==b'DATA@'):
+  if(header==b'DATA@') or (header==b'DATA*'):
     # Divide into 36 byte messages
     messagelen = 36
     for i in range(0,int((len(messages))/messagelen)):
